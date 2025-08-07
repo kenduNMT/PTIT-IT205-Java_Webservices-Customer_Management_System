@@ -61,6 +61,6 @@ public class User {
     private LocalDateTime updatedAt;
 
     public enum UserStatus {
-        ACTIVE, INACTIVE, LOCKED
+        ACTIVE, INACTIVE, DELETED
     }
 }

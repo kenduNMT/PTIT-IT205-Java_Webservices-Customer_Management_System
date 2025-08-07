@@ -22,6 +22,11 @@ public class UserDetailsServiceCus implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy người dùng: " + username));
 
+        // Kiểm tra user có bị soft delete không
+        if (user.getStatus() == User.UserStatus.DELETED) {
+            throw new UsernameNotFoundException("User account has been deleted");
+        }
+
         return UserDetailsCus.build(user);
     }
 }

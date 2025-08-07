@@ -15,20 +15,27 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
 
-    Optional<User> findByEmail(String email);
-
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
 
+    // Tìm kiếm với từ khóa và loại trừ users bị soft delete
     @Query("SELECT u FROM User u WHERE " +
-            "(:keyword IS NULL OR :keyword = '' OR " +
-            "LOWER(u.username) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-            "LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-            "LOWER(u.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')))")
-    Page<User> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
+            "u.status != :excludeStatus AND " +
+            "(LOWER(u.username) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(u.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%')))")
+    Page<User> findByKeywordAndStatusNot(@Param("keyword") String keyword,
+                                         @Param("excludeStatus") User.UserStatus excludeStatus,
+                                         Pageable pageable);
 
-    @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name = :roleName")
-    Page<User> findByRoleName(@Param("roleName") com.example.customersms.entity.Roles.RoleName roleName,
-                              Pageable pageable);
+    // Lấy tất cả users trừ những user có status cụ thể (thường là DELETED)
+    Page<User> findByStatusNot(User.UserStatus excludeStatus, Pageable pageable);
+
+    // Method gốc cho tìm kiếm (có thể giữ lại để backward compatibility)
+    @Query("SELECT u FROM User u WHERE " +
+            "(LOWER(u.username) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(u.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%')))")
+    Page<User> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }

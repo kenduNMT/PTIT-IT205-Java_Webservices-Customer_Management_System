@@ -12,17 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageResponse<T> {
-    private List<T> items;
-    private PaginationInfo pagination;
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class PaginationInfo {
-        private int currentPage;
-        private int pageSize;
-        private int totalPages;
-        private long totalItems;
-    }
+    private List<T> content;
+    private int pageNumber;
+    private int pageSize;
+    private long totalElements;
+    private int totalPages;
+    private boolean first;
+    private boolean last;
 }
