@@ -38,4 +38,35 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "LOWER(u.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%')))")
     Page<User> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
+    /**
+     * Tìm users có role cụ thể
+     */
+    Page<User> findByRoles_Id(Long roleId, Pageable pageable);
+
+    /**
+     * Đếm số users có role cụ thể
+     */
+    @Query("SELECT COUNT(DISTINCT u) FROM User u JOIN u.roles r WHERE r.id = :roleId")
+    long countUsersWithRole(@Param("roleId") Long roleId);
+
+    /**
+     * Tìm tất cả users có roles (với phân trang)
+     */
+    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles")
+    Page<User> findAllWithRoles(Pageable pageable);
+
+    /**
+     * Tìm users với filter keyword và roleName
+     */
+    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles r WHERE " +
+            "(:keyword IS NULL OR :keyword = '' OR " +
+            "LOWER(u.username) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(u.fullName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(u.email) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND " +
+            "(:roleName IS NULL OR :roleName = '' OR " +
+            "LOWER(r.name) LIKE LOWER(CONCAT('%', :roleName, '%')))")
+    Page<User> findUsersWithRoleFilter(@Param("keyword") String keyword,
+                                       @Param("roleName") String roleName,
+                                       Pageable pageable);
 }
