@@ -13,7 +13,6 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/admin/roles")
@@ -30,7 +29,7 @@ public class RoleController {
             List<Roles> roles = roleRepository.findAll();
             List<RoleResponse> roleResponses = roles.stream()
                     .map(RoleResponse::new)
-                    .collect(Collectors.toList());
+                    .toList();
 
             return ResponseEntity.ok().body(Map.of(
                     "success", true,

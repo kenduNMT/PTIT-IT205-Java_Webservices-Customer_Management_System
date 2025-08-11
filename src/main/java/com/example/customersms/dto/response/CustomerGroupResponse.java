@@ -28,10 +28,6 @@ public class CustomerGroupResponse {
 
     private Boolean isActive;
 
-    private Double discountPercentage;
-
-    private Integer priorityLevel;
-
     private Long customerCount; // Số lượng khách hàng trong nhóm
 
     private String status; // Trạng thái hiển thị: "Hoạt động" / "Không hoạt động"

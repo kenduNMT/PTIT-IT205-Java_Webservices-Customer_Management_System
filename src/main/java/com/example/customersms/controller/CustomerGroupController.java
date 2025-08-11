@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/customer-groups")
+@RequestMapping("/api/v1/customer-groups")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class CustomerGroupController {

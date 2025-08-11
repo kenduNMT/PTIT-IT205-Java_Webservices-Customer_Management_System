@@ -19,14 +19,6 @@ public class CustomerGroupRequest {
     @Size(max = 500, message = "Mô tả không được vượt quá 500 ký tự")
     private String description;
 
-    @DecimalMin(value = "0.0", inclusive = true, message = "Phần trăm giảm giá phải >= 0")
-    @DecimalMax(value = "100.0", inclusive = true, message = "Phần trăm giảm giá phải <= 100")
-    private Double discountPercentage;
-
-    @Min(value = 1, message = "Mức độ ưu tiên phải >= 1")
-    @Max(value = 10, message = "Mức độ ưu tiên phải <= 10")
-    private Integer priorityLevel;
-
     @Builder.Default
     private Boolean isActive = true;
 }

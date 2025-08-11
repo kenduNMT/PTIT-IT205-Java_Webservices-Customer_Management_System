@@ -42,13 +42,6 @@ public class CustomerGroup {
     @Builder.Default
     private Boolean isActive = true;
 
-    @Column(name = "discount_percentage")
-    private Double discountPercentage;
-
-    @Column(name = "priority_level")
-    private Integer priorityLevel;
-
-    // Relationship with customers (if exists)
     @OneToMany(mappedBy = "customerGroup", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Customer> customers;
 }
