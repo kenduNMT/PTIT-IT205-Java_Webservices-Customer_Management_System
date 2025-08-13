@@ -60,8 +60,6 @@ public class CustomerGroupServiceImpl implements CustomerGroupService {
         CustomerGroup customerGroup = CustomerGroup.builder()
                 .groupName(request.getGroupName())
                 .description(request.getDescription())
-                .discountPercentage(request.getDiscountPercentage())
-                .priorityLevel(request.getPriorityLevel())
                 .isActive(request.getIsActive())
                 .build();
 
@@ -84,8 +82,6 @@ public class CustomerGroupServiceImpl implements CustomerGroupService {
 
         existingGroup.setGroupName(request.getGroupName());
         existingGroup.setDescription(request.getDescription());
-        existingGroup.setDiscountPercentage(request.getDiscountPercentage());
-        existingGroup.setPriorityLevel(request.getPriorityLevel());
         existingGroup.setIsActive(request.getIsActive());
 
         CustomerGroup updatedGroup = customerGroupRepository.save(existingGroup);
@@ -145,8 +141,6 @@ public class CustomerGroupServiceImpl implements CustomerGroupService {
                 .createdAt(customerGroup.getCreatedAt())
                 .updatedAt(customerGroup.getUpdatedAt())
                 .isActive(customerGroup.getIsActive())
-                .discountPercentage(customerGroup.getDiscountPercentage())
-                .priorityLevel(customerGroup.getPriorityLevel())
                 .customerCount(customerGroup.getCustomers() != null ? (long) customerGroup.getCustomers().size() : 0L)
                 .status(customerGroup.getIsActive() ? "Hoạt động" : "Không hoạt động")
                 .build();
